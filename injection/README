@@ -1,0 +1,74 @@
+# Injection Program
+
+This project includes a C program (`injection.c`) and a Makefile to compile and execute binaries generated dynamically from external binary files. The program uses `xxd` to convert binary files into C arrays, which are then compiled into an executable that temporarily creates and executes these binaries.
+
+## Project Structure
+
+- **`injection.c`**: Main program that extracts the binaries, writes them to temporary files, and executes them.
+- **Makefile**: Automates the steps of converting binaries into arrays, compilation, and cleanup.
+- **Directories**:
+  - `ssl/`: Contains the source for `prog1`.
+  - `base_program/`: Contains the source for `prog2`.
+  - `certs/`: Contains the certificate and key files for OpenSSL libraries.
+
+## Prerequisites
+
+- GCC (C compiler)
+- `xxd` (utility to convert binaries into C arrays)
+- OpenSSL (for `libssl` and `libcrypto`)
+- Binary files `prog1` and `prog2` placed in their respective directories.
+
+## Compilation and Execution
+
+### Steps
+
+1. Place your binary files in their respective directories:
+   - `ssl/prog1`
+   - `base_program/prog2`
+
+2. Run the following command to compile everything:
+   ```bash
+   make all
+   ```
+
+3. To run the generated program, use:
+   ```bash
+   make run
+   ```
+
+   **Note**: This command requires `sudo` privileges to execute the final executable.
+
+4. To clean up the generated files (temporary and object files), run:
+   ```bash
+   make clean
+   ```
+
+## Program Operation
+
+1. The binary files (`prog1` and `prog2`) are converted into C arrays using `xxd`.
+2. The arrays are integrated into the `injection.c` program.
+3. The `injection.c` program writes these binaries to temporary files in the `.config/` directory.
+4. It assigns execution permissions to these files.
+5. Two separate processes are created to run the programs:
+   - The first runs `prog1`.
+   - The second runs `prog2`.
+6. Once the programs are finished, the temporary files are deleted.
+
+## Important Variables in the Makefile
+
+- **`PROG1_BIN`** and **`PROG2_BIN`**: Names of the binary files.
+- **`CERT_DIR`**, **`CERT_FILE`**, **`KEY_FILE`**: Paths for OpenSSL certificate-related files.
+- **`CFLAGS`**: Compilation flags.
+- **`LIBS`**: Linked libraries.
+
+## Security and Limitations
+
+- The program creates temporary executable files in a `.config/` directory. Ensure that this location is secure.
+- The embedded binaries must be trustworthy and free from malicious code.
+- The program must be executed with appropriate privileges to avoid access or permission issues.
+
+---
+
+## Author
+TheGreenJoker
+```

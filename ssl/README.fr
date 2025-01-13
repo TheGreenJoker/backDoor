@@ -1,0 +1,90 @@
+# Secure Client-Server Communication Project
+
+## Description
+Ce projet implémente une communication client-serveur sécurisée en utilisant SSL/TLS. Le serveur est implémenté en C avec OpenSSL, tandis que le client est écrit en Python avec la bibliothèque `ssl`. Ce projet a été conçu pour fournir une base pour des communications chiffrées entre un client et un serveur sur un réseau non sécurisé.
+
+## Fonctionnalités
+- Chiffrement des données transmises entre le client et le serveur.
+- Authentification mutuelle via des certificats SSL/TLS.
+- Exécution de commandes sur le serveur via des requêtes client (attention : à utiliser uniquement dans un environnement contrôlé).
+
+## Structure du projet
+
+### Fichiers principaux
+- `server.c` : Implémente le serveur utilisant OpenSSL pour gérer les connexions sécurisées.
+- `clien.py` : Implémente le client permettant de se connecter au serveur via SSL.
+- `makefile` : Automatisation de la compilation du serveur.
+
+### Détails des fichiers
+#### `server.c`
+- Initialise un serveur écouteur sur le port 8520.
+- Charge des certificats et des clés privées directement depuis des données en hexadécimal.
+- Permet au client d'envoyer des commandes, qui sont exécutées sur le serveur, et les résultats sont renvoyés au client.
+
+#### `clien.py`
+- Se connecte au serveur sur le port 8520.
+- Utilise un certificat pour authentifier le serveur.
+- Permet à l'utilisateur d'envoyer des messages ou des commandes au serveur.
+
+#### `makefile`
+- Simplifie la compilation et le nettoyage du projet.
+
+## Prérequis
+- OpenSSL installé sur le système.
+- Python 3 avec la bibliothèque standard `ssl`.
+- Un certificat pour le client et le serveur.
+
+## Instructions d'installation
+1. Clonez le répertoire du projet :
+   ```bash
+   git clone <url_du_depot>
+   cd <nom_du_projet>
+   ```
+
+2. Compilez le serveur :
+   ```bash
+   make
+   ```
+
+3. Générez les certificats (si nécessaire) :
+   ```bash
+   openssl req -new -x509 -days 365 -nodes -out server.crt -keyout server.key
+   openssl req -new -x509 -days 365 -nodes -out client.crt -keyout client.key
+   ```
+
+## Utilisation
+
+### Lancer le serveur
+1. Lancez le serveur compilé :
+   ```bash
+   ./server
+   ```
+
+### Lancer le client
+1. Exécutez le client Python :
+   ```bash
+   python clien.py
+   ```
+
+2. Saisissez une commande ou un message pour l'envoyer au serveur. Par exemple :
+   ```
+   > ls
+   > exit
+   ```
+
+## Précautions de sécurité
+- **Exécution de commandes** : La fonctionnalité permettant d'exécuter des commandes sur le serveur présente des risques de sécurité. Utilisez uniquement dans un environnement contrôlé.
+- **Certificats** : Assurez-vous que les certificats sont bien générés et sécurisés.
+
+## Limitations
+- La vérification du nom d'hôte est désactivée dans le client Python. Cela doit être activé pour un déploiement en production.
+- L'arrêt du serveur est immédiat et non grâce à une gestion sophistiquée des signaux ou des threads.
+
+## Améliorations futures
+- Ajouter une authentification par utilisateur.
+- Implémenter une journée avancée pour surveiller les activités du serveur.
+- Améliorer la gestion des erreurs.
+
+## Auteur
+TheGreenJoker
+
