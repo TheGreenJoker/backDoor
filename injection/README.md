@@ -1,4 +1,3 @@
-```markdown
 # Injection Program
 
 This project demonstrates a C program (`injection.c`) with a `Makefile` to dynamically compile and execute binaries derived from external binary files. It uses `xxd` to convert binary files into C arrays, which are then compiled into an executable capable of temporarily creating and executing these binaries.
