@@ -31,20 +31,14 @@ Ensure the following tools and libraries are installed on your system:
    - `base_program/prog2`
 
 2. **Compile everything** by running:
-   ```bash
-   make all
-   ```
+   ```make all```
 
 3. **Run the generated program** using:
-   ```bash
-   make run
-   ```
+   ```make run```
    > **Note**: Running the final executable may require `sudo` privileges.
 
 4. **Clean up generated files** (temporary and object files) using:
-   ```bash
-   make clean
-   ```
+   ```make clean```
 
 ## Program Operation
 
