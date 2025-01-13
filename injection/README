@@ -1,74 +1,78 @@
+Voici un formatage structuré et clair pour un fichier README sur GitHub :  
+
+```markdown
 # Injection Program
 
-This project includes a C program (`injection.c`) and a Makefile to compile and execute binaries generated dynamically from external binary files. The program uses `xxd` to convert binary files into C arrays, which are then compiled into an executable that temporarily creates and executes these binaries.
+This project demonstrates a C program (`injection.c`) with a `Makefile` to dynamically compile and execute binaries derived from external binary files. It uses `xxd` to convert binary files into C arrays, which are then compiled into an executable capable of temporarily creating and executing these binaries.
 
 ## Project Structure
 
-- **`injection.c`**: Main program that extracts the binaries, writes them to temporary files, and executes them.
-- **Makefile**: Automates the steps of converting binaries into arrays, compilation, and cleanup.
+- **`injection.c`**: Main program that extracts binaries, writes them to temporary files, and executes them.
+- **`Makefile`**: Automates the process of converting binaries into arrays, compilation, and cleanup.
 - **Directories**:
   - `ssl/`: Contains the source for `prog1`.
   - `base_program/`: Contains the source for `prog2`.
-  - `certs/`: Contains the certificate and key files for OpenSSL libraries.
+  - `certs/`: Contains certificate and key files for OpenSSL libraries.
 
 ## Prerequisites
 
-- GCC (C compiler)
-- `xxd` (utility to convert binaries into C arrays)
-- OpenSSL (for `libssl` and `libcrypto`)
-- Binary files `prog1` and `prog2` placed in their respective directories.
+Ensure the following tools and libraries are installed on your system:
+- **GCC**: C compiler.
+- **xxd**: Utility to convert binary files into C arrays.
+- **OpenSSL**: Provides `libssl` and `libcrypto` libraries.
+- Binary files `prog1` and `prog2` placed in their respective directories (`ssl/` and `base_program/`).
 
 ## Compilation and Execution
 
 ### Steps
 
-1. Place your binary files in their respective directories:
+1. **Place your binary files** in their respective directories:
    - `ssl/prog1`
    - `base_program/prog2`
 
-2. Run the following command to compile everything:
+2. **Compile everything** by running:
    ```bash
    make all
    ```
 
-3. To run the generated program, use:
+3. **Run the generated program** using:
    ```bash
    make run
    ```
+   > **Note**: Running the final executable may require `sudo` privileges.
 
-   **Note**: This command requires `sudo` privileges to execute the final executable.
-
-4. To clean up the generated files (temporary and object files), run:
+4. **Clean up generated files** (temporary and object files) using:
    ```bash
    make clean
    ```
 
 ## Program Operation
 
-1. The binary files (`prog1` and `prog2`) are converted into C arrays using `xxd`.
-2. The arrays are integrated into the `injection.c` program.
-3. The `injection.c` program writes these binaries to temporary files in the `.config/` directory.
-4. It assigns execution permissions to these files.
-5. Two separate processes are created to run the programs:
-   - The first runs `prog1`.
-   - The second runs `prog2`.
-6. Once the programs are finished, the temporary files are deleted.
+The program works as follows:
+1. **Binary Conversion**: `prog1` and `prog2` are converted into C arrays using `xxd`.
+2. **Code Integration**: The arrays are embedded into the `injection.c` program.
+3. **Temporary Files**: The program writes these arrays into temporary files in the `.config/` directory.
+4. **File Permissions**: Execution permissions are assigned to these temporary files.
+5. **Program Execution**: Two separate processes are created to execute:
+   - `prog1`
+   - `prog2`
+6. **Cleanup**: Once the binaries finish executing, the temporary files are deleted.
 
-## Important Variables in the Makefile
+## Key Variables in the Makefile
 
 - **`PROG1_BIN`** and **`PROG2_BIN`**: Names of the binary files.
 - **`CERT_DIR`**, **`CERT_FILE`**, **`KEY_FILE`**: Paths for OpenSSL certificate-related files.
-- **`CFLAGS`**: Compilation flags.
-- **`LIBS`**: Linked libraries.
+- **`CFLAGS`**: Compilation flags used during program building.
+- **`LIBS`**: Libraries linked during compilation.
 
-## Security and Limitations
+## Security Considerations
 
-- The program creates temporary executable files in a `.config/` directory. Ensure that this location is secure.
-- The embedded binaries must be trustworthy and free from malicious code.
-- The program must be executed with appropriate privileges to avoid access or permission issues.
+- Temporary files are created in the `.config/` directory. Ensure this directory is secure and properly managed.
+- Only use trusted and verified binaries to avoid security risks.
+- Execution privileges may require administrative access. Handle privileges responsibly.
 
 ---
 
 ## Author
-TheGreenJoker
-```
+
+**TheGreenJoker**
