@@ -69,7 +69,8 @@ This project implements secure client-server communication using SSL/TLS. The se
 2. Enter a command or message to send to the server. For example:
    ```
    > ls
-   > exit
+   > exit # stop the connexion
+   > stop # stop the sever
    ```
 
 ## Security Precautions
